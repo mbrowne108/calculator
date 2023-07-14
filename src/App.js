@@ -3,7 +3,6 @@ import './App.css';
 
 function App() {
   const [current, setCurrent] = useState('0')
-  const [previous, setPrevious] = useState('0')
 
   const handleNum = (e) => {
     const num = e.target.textContent
@@ -16,7 +15,7 @@ function App() {
   }
 
   const handleDecimal = () => {
-    const arr = current.split(' ');
+    const arr = current.split('');
     const last = arr[arr.length - 1];
 
     if (!last.includes('.') && isNaN(parseInt(last)) === false) {
@@ -25,20 +24,25 @@ function App() {
   }
 
   const handleOp = (e) => {
-    const arr = current.split(' ');
+    const arr = current.split('');
     const last = arr[arr.length - 1];
     const op = e.target.textContent
 
     if (!isNaN(parseInt(last))) {
-      setCurrent(current + ' ' + op + ' ')
+      setCurrent(current + op)
     }
-
-
-    
   }
 
   const handleEqual = () => {
     setCurrent(eval(current))
+  }
+
+  const handleDel = () => {
+    if (current.length > 1) {
+      setCurrent(current.substring(0, current.length - 1))
+    } else {
+      setCurrent('0')
+    }
   }
 
 
@@ -46,11 +50,10 @@ function App() {
     <div className="App">
       <div className='grid'>
         <div className='output'>
-          <div className='previous'>{previous}</div>
           <div className='current'>{current}</div>
         </div>
         <button className='span-two' onClick={() => setCurrent('0')}>AC</button>
-        <button>DEL</button>
+        <button onClick={handleDel}>DEL</button>
         <button onClick={handleOp}>/</button>
         <button onClick={handleNum}>1</button>
         <button onClick={handleNum}>2</button>
